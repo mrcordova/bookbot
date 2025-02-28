@@ -1,30 +1,14 @@
+from stats import count_characters, count_words, get_book_text, print_report, get_num_words
+import sys
 def main ():
-
-    book_path = 'books/frankenstein.txt'
+    if len(sys.argv) != 2:
+        print('Usage: python3 main.py <path_to_book>')
+        sys.exit(1)
+    
+    book_path = sys.argv[1]
     text = get_book_text(book_path)
-    num_words = count_words(text)
+    num_words = get_num_words(text)
     chars_dict = count_characters(text)
     print_report(book_path, num_words, chars_dict)
 
-def get_book_text(book_path):
-    with open(book_path) as f:
-        return f.read()
-def count_words(str):
-    return len(str.split())
-
-def count_characters(str):
-    chars = {}
-    for char in str:
-        lower_char = char.lower()
-        if not lower_char in chars:
-            chars[lower_char] = 0
-        chars[lower_char] += 1
-    return chars
-def print_report(book_path, num_words, chars_dict):
-    print(f'--- Begin report of {book_path} ---')
-    print(f'{num_words} words found in the document')
-    for char in chars_dict:
-        if ord(char) >= 97 and ord(char) <= 122:
-            print(f"The '{char}' character was {chars_dict[char]} times")
-    print('--- End report ---')
 main()
